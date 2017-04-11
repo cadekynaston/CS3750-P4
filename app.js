@@ -13,13 +13,13 @@ var middleware = require('./middleware');
 
 
 // database dependencies
-mongoose.connect('mongodb://localhost/chat');
+mongoose.connect('mongodb://localhost/stock');
 mongoose.Promise = Promise;
 
 // controllers
 var index = require('./controllers/index');
 var users = require('./controllers/users');
-var chat = require('./controllers/chat');
+var window = require('./controllers/window');
 
 // database connection
 var db = mongoose.connection;
@@ -30,13 +30,6 @@ db.once('open', function() {
 
 // express
 var app = express();
-
-// socket.io 
-var socket_io = require('socket.io');
-var io = socket_io();
-app.io = io;
-
-var routes = require('./models/socket')(app.io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -67,7 +60,7 @@ app.use(middleware.simpleAuth);
 //routes
 app.use('/', index);
 app.use('/users', users);
-app.use('/chat', chat);
+app.use('/window', window);
 
 app.get('/logout', function(req, res) {
   req.session.reset();
