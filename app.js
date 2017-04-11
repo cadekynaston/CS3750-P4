@@ -13,7 +13,7 @@ var middleware = require('./middleware');
 
 
 // database dependencies
-mongoose.connect('mongodb://localhost/chat');
+mongoose.connect('mongodb://localhost/stock');
 mongoose.Promise = Promise;
 
 // controllers
@@ -30,8 +30,6 @@ db.once('open', function() {
 
 // express
 var app = express();
-
-var routes = require('./models/socket')(app.io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
