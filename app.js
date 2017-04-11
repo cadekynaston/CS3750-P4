@@ -19,7 +19,7 @@ mongoose.Promise = Promise;
 // controllers
 var index = require('./controllers/index');
 var users = require('./controllers/users');
-var window = require('./controllers/window');
+var stock = require('./controllers/stock');
 
 // database connection
 var db = mongoose.connection;
@@ -60,7 +60,7 @@ app.use(middleware.simpleAuth);
 //routes
 app.use('/', index);
 app.use('/users', users);
-app.use('/window', window);
+app.use('/stock', stock);
 
 app.get('/logout', function(req, res) {
   req.session.reset();
