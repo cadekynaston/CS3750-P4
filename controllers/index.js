@@ -1,5 +1,12 @@
 var express = require('express');
 var router = express.Router();
+// //guessing where to require highcharts
+// var Highcharts = require('highcharts');
+
+// // Load module after Highcharts is loaded
+// require('highcharts/modules/exporting')(Highcharts);
+
+///////////////////////////////////////////////////////////////////
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
