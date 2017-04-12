@@ -12,6 +12,7 @@ html(lang='en')
     //- script
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src="https://code.highcharts.com/highcharts.src.js")
     //- Custom Fonts
     link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
     link(href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
@@ -23,6 +24,8 @@ html(lang='en')
         ul.nav.navbar-nav
           li
             a(href='/stock/list') Stock
+          li
+            a(href='/stock/manage') Manage
         ul.nav.navbar-nav.navbar-nav-center
           li
             a User: 
@@ -39,6 +42,8 @@ html(lang='en')
                 |  Logout
 
     block scripts
+      script(src='/scripts/_manage.js')
+      <script src="/js/highstock.js"></script>
 
     block content
   
