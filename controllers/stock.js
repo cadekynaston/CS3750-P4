@@ -10,6 +10,7 @@ var utils = require('./utils');
 router.get('/view', utils.requireLogin, function(req, res, next) {
   res.render('view', {
     userName: req.user.username,
+    portfolio: req.user.portfolio,
     csrfToken: req.csrfToken()
   });
 });
@@ -17,6 +18,7 @@ router.get('/view', utils.requireLogin, function(req, res, next) {
 router.get('/list', utils.requireLogin, function(req, res, next) {
   res.render('list', {
     userName: req.user.username,
+    portfolio: req.user.portfolio,
     csrfToken: req.csrfToken()
   });
 });
@@ -24,6 +26,7 @@ router.get('/list', utils.requireLogin, function(req, res, next) {
 router.get('/add', utils.requireLogin, function(req, res, next) {
   res.render('add', {
     userName: req.user.username,
+    portfolio: req.user.portfolio,
     csrfToken: req.csrfToken()
   });
 });
@@ -31,6 +34,7 @@ router.get('/add', utils.requireLogin, function(req, res, next) {
 router.get('/manage', utils.requireLogin, function(req, res, next) {
   res.render('manage', {
     userName: req.user.username,
+    portfolio: req.user.portfolio,
     csrfToken: req.csrfToken()
   });
 });
