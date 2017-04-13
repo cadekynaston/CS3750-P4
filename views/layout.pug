@@ -26,38 +26,45 @@ html(lang='en')
             li
               a User: 
                 span#myName= userName
-        ul.nav.navbar-nav.navbar-right
-          
+        ul.nav.navbar-nav.navbar-right          
           if userName == 'No User'
-              li
-                a(href='/users/login')
-                  span.glyphicon.glyphicon-log-in
-                  |  Login
-              li
-                a(href='/users/register')
-                  span.glyphicon.glyphicon-pencil
-                  |  Register
-          else 
-            li
-              a(href='/stock/manage') Manage Stocks
-            li
-              a(href='/stock/list') Stock List
-            li
-              a(href='/stock/view') View Stocks
-            li
-              a(href='/stock/add') Add Stock
-            li
-              a(href='/logout')
-                span.glyphicon.glyphicon-log-out
-                |  Logout
+            .dropdown
+              .dropbtn
+                li
+                  a(href='/users/login')
+                    span.glyphicon.glyphicon-log-in
+                    |   Login
+            .dropdown
+              .dropbtn
+                li
+                  a(href='/users/register')
+                    span.glyphicon.glyphicon-pencil
+                    |   Register
+          else
+            .dropdown
+              .dropbtn
+                span.glyphicon.glyphicon-signal
+                |      Stocks   
+                span.glyphicon.glyphicon-chevron-down
+              .dropdown-content
+                li
+                  a(href='/stock/manage') Manage Stocks
+                li
+                  a(href='/stock/list') Stock List
+                li
+                  a(href='/stock/view') View Stocks
+                li
+                  a(href='/stock/add') Add Stock
+            .dropdown
+              .dropbtn
+                a#logout(href='/logout')
+                  span.glyphicon.glyphicon-log-out
+                  |  Logout
 
     block scripts
       script(src='/scripts/_manage.js')
-      <script src="/js/highstock.js"></script>
+      script(src="/js/highstock.js")
 
-    block content
-  
-
-   
+    block content  
     
     
