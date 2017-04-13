@@ -37,6 +37,7 @@ router.post('/register', function(req, res, next) {
     email:      req.body.email,
     username:   req.body.username,
     password:   hash,
+    portfolio:  []
   });
   //console.log(user); 
   user.save(function(err) {
