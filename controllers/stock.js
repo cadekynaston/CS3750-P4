@@ -24,6 +24,7 @@ router.get('/list', utils.requireLogin, function(req, res, next) {
 router.get('/add', utils.requireLogin, function(req, res, next) {
   res.render('add', {
     userName: req.user.username,
+    portfolio: req.user.portfolio,
     csrfToken: req.csrfToken()
   });
 });
