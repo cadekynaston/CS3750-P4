@@ -1,4 +1,3 @@
-
 doctype html
 html(lang='en')
   head
@@ -22,21 +21,32 @@ html(lang='en')
         .navbar-header
           a.navbar-brand(href='/') Project 4 : Group 1
         ul.nav.navbar-nav
-          li
-            a(href='/stock/list') Stock
-          li
-            a(href='/stock/manage') Manage
         ul.nav.navbar-nav.navbar-nav-center
-          li
-            a User: 
-              span#myName= userName
+          if userName != 'No User'
+            li
+              a User: 
+                span#myName= userName
         ul.nav.navbar-nav.navbar-right
-          li
-            if userName == 'No User'
-              a(href='/users/login')
-                span.glyphicon.glyphicon-log-in
-                |  Login
-            else 
+          
+          if userName == 'No User'
+              li
+                a(href='/users/login')
+                  span.glyphicon.glyphicon-log-in
+                  |  Login
+              li
+                a(href='/users/register')
+                  span.glyphicon.glyphicon-pencil
+                  |  Register
+          else 
+            li
+              a(href='/stock/manage') Manage Stocks
+            li
+              a(href='/stock/list') Stock List
+            li
+              a(href='/stock/view') View Stocks
+            li
+              a(href='/stock/add') Add Stock
+            li
               a(href='/logout')
                 span.glyphicon.glyphicon-log-out
                 |  Logout
