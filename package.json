@@ -14,6 +14,7 @@
     "debug": "~2.6.0",
     "express": "~4.14.1",
     "highcharts": "^5.0.10",
+    "highstock-browserify": "^1.0.6",
     "mongoose": "^4.8.1",
     "morgan": "~1.7.0",
     "pug": "^2.0.0-beta11",
