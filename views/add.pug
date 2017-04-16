@@ -1,10 +1,73 @@
+
 extends layout
 
+
 block content
-  .main show stock window 
-  a.btn.btn-primary.btn-xl(href='/stock/list')
-      #btn2 List Stock
-  a.btn.btn-primary.btn-xl(href='/stock/manage')
-      #btn2 Manage Stock
-  a.btn.btn-primary.btn-xl(href='/stock/view')
-      #btn2 View Stock
+  link(rel='stylesheet', href='/stylesheets/add.css')
+  .stock-search-container 
+    .stock-input-container
+      input(type='text' id="stock-search" placeholder="search for stocks" class="stock-search")
+      input(type='button' id="stock-search-btn" value="Search" onClick="callAPI()")
+    #stocks
+      .stock-result
+        .stock-title Netflix
+        .stock-symbol nflx
+        button.add-stock-btn add
+
+      
+  
+    
+    
+  script.
+    
+    $("#stocks").on('click', 'button', function() {
+        var parent = $(this).parent();
+        parent[0].innerHTML = "added!"
+        
+        var data = {};
+        data.title = "title";
+        data.message = "message";
+          
+        $.ajax({type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            url: 'http://localhost:3000/add',						
+            success: function(data) {
+                console.log('success');
+                console.log(JSON.stringify(data));
+            }
+        });
+      });
+      
+    
+    
+    function jsonCallback(data){
+      const app = document.querySelector('#stocks');
+      app.innerHTML = '';
+      data.map(x => {
+        var node = document.createElement('div');
+        node.innerHTML = `
+          <div class="stock-result" id="`+x.Symbol+`">
+            <div class="stock-title">
+              `+x.Name+`
+            </div>
+            <div class="stock-symbol">
+              `+x.Symbol+`
+            </div>
+            <button class="add-stock-btn">add</button>
+          </div>  
+        `;
+    
+        app.appendChild(node);
+      });
+    };
+    
+    function callAPI(x) {
+      var stock = document.getElementById("stock-search").value;
+      console.log(stock)
+      $.ajax({
+        url: "http://dev.markitondemand.com/MODApis/Api/v2/Lookup/jsonp?input="+stock,
+        dataType: "jsonp",
+        jsonpCallback: "jsonCallback"
+      });
+    }
