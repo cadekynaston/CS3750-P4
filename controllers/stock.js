@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 // has function to make sure you can only get to page if logged in
-var utils = require('./utils');  
-// NOTE THE utils.requireLogin   
-// this function from the utils class makes sure they are logged 
+var utils = require('./utils');
+// NOTE THE utils.requireLogin
+// this function from the utils class makes sure they are logged
 // in before being able to go to chat but its not working right
 
 /* GET stock page. */
@@ -37,6 +37,11 @@ router.get('/manage', utils.requireLogin, function(req, res, next) {
     portfolio: req.user.portfolio,
     csrfToken: req.csrfToken()
   });
+});
+
+router.post('/add',utils.requireLogin, function(req, res){
+	console.log('body: ' + JSON.stringify(req.body));
+
 });
 
 module.exports = router;
