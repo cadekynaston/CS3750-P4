@@ -1,16 +1,35 @@
 $(document).ready(function() {
     $('.box').hide().fadeIn(1000);
 });
+
+// slider
+// how do I change the amount of each unique stock???????????
+function changeAmount() {
+    var x = document.getElementById("myRange").value;
+    document.getElementById("dollars").innerHTML = x;
+}
+// end slider
+
 $(function() {
     var totalMoney = 0;
+    // get the stock info here
     var stocks = [
             {stockCode:"EFGH", amount: 2344},
             {stockCode:"IJKL", amount: 15434},
             {stockCode:"MNOP", amount: 23303},
-            {stockCode:"ABCD", amount: 6450}]; 
+            {stockCode:"ABCD", amount: 6450}];
+    
     stocks.forEach(function(element) {
+        //sum up the total of all stock amounts
         totalMoney += element.amount;
-    }) 
+    })
+
+    // make a list of sliders
+    stocks.forEach(function(element) {
+        $('.sliderList').append('<div><label><input type="range" value="0" onchange="changeAmount()" id="'
+                 + element.stockCode + '">' + element.stockCode + '</input></label></div>');
+    }, this);
+
     //snagged this from stack overflow to format the $
     Number.prototype.formatMoney = function(c, d, t){
         var n = this, 

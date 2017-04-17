@@ -83,3 +83,12 @@ body {
     text-decoration: none;    
 }
 
+#container{
+    width:50%; 
+    height:400px;
+
+}
+
+#faded {
+        opacity: 0.6;
+}
