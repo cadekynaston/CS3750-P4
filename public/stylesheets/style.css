@@ -92,3 +92,8 @@ body {
 #faded {
         opacity: 0.6;
 }
+
+.sliderList {
+    font-size: 16;
+    direction: rtl;
+}
