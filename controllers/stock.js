@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 // has function to make sure you can only get to page if logged in
 var utils = require('./utils');  
+var schema = require('../models/schema');
 // NOTE THE utils.requireLogin   
 // this function from the utils class makes sure they are logged 
 // in before being able to go to chat but its not working right
@@ -16,6 +17,7 @@ router.get('/view', utils.requireLogin, function(req, res, next) {
 });
 
 router.get('/list', utils.requireLogin, function(req, res, next) {
+  
   res.render('list', {
     userName: req.user.username,
     portfolio: req.user.portfolio,
