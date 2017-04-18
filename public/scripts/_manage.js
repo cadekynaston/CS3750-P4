@@ -8,12 +8,12 @@ $(document).ready(function() {
 $(function() {
     var totalMoney = 0;
     // get the stock info here
-    var stocks = [
+    var stocksOld = [
             {stockCode:"EFGH", amount: 2344},
             {stockCode:"IJKL", amount: 15434},
             {stockCode:"MNOP", amount: 23303},
             {stockCode:"ABCD", amount: 6450}];
-    
+    var stocks = JSON.parse($('#portfolio').val());
     stocks.forEach(function(element) {
         //sum up the total of all stock amounts
         totalMoney += element.amount;
