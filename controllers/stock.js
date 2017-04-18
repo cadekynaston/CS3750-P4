@@ -49,7 +49,7 @@ router.get('/manage', utils.requireLogin, function(req, res, next) {
 router.post('/add', function(req, res){
   var obj = {};
   console.log('body: ' + JSON.stringify(req.body.symbol));
-  req.user.portfolio.push([JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1),0.0])
+  req.user.portfolio.push({stockCode:JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1),amount: 0.0})
   console.log('user', req.user.username, 'portfolio', req.user.portfolio);
   
   schema.User.findOneAndUpdate({ username: req.user.username },
