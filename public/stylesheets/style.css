@@ -83,6 +83,11 @@ body {
     text-decoration: none;    
 }
 
+.main {
+    margin-top: 50px;
+    padding: 40px;
+    background-color: rgba(0,0,0,0.5);
+
 #container{
     width:50%; 
     height:400px;
