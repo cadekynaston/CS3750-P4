@@ -1,4 +1,15 @@
+#list {
+    width: 100%;
+}
 #title {
-    font-size: 18pt;
-    
+    margin-top: 0;
+    padding-bottom: 20px;
+}
+#left {
+    /*float: left;*/
+    padding-right: 40px;
+}
+#right {
+    /*float: right;*/
+    padding-left: 40px;
 }
