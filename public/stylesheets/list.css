@@ -1,5 +1,6 @@
 #list {
     width: 100%;
+    display: table;
 }
 #title {
     margin-top: 0;
@@ -13,7 +14,16 @@
     /*float: right;*/
     padding-left: 40px;
 }
-#removebtn {
-    float: right;
-    margin-top: -8px;
+/*#removebtn {
+    
+}*/
+
+.table > tbody > tr > td {
+    vertical-align: middle !important;
+    white-space: nowrap;
+    width: 28%;
+}
+.table > tbody > tr > th{
+    vertical-align: middle !important;
+    width: 20%;
 }
