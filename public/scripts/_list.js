@@ -1,8 +1,16 @@
+
 window.onload = ()=> {
      var portfolio = JSON.parse($('#portfolio').val());
      portfolio.forEach(function(element) {
-        $('.stock-list').append('<div id="list"><span id="left">' + element.stockCode + '</span><span id="right">' + element.amount + '</span><input type="button" id="removebtn" class="btn btn-danger" value="Remove"/></div><hr/>');
-        $('.stock-list').append();
+        $('tbody').append('<tr><th>' + element.stockCode + '</th><td>' + element.amount + '</td>'
+        + '<td>Up</td><td>TC</td><td><input type="button" id="removebtn" class="btn btn-danger" value="Remove" onclick="remove(this)"/></td>><hr/>');
     })
+}
 
+function remove(item)
+{    
+    $('table').on('click', 'input[type="button"]', function(e)
+    {
+        $(this).closest('tr').remove();
+    });
 }
