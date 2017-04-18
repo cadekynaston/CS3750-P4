@@ -1,5 +1,11 @@
 extends layout
 
 block content
-    .container.main show stock window 
-        // list all stocks here
+    .container.main
+        .stock-list
+            h2#title Stock List
+            #portfolio= portfolio
+
+block scripts
+    script(src='/scripts/_list.js')
+    link(rel='stylesheet', href='/stylesheets/list.css')
