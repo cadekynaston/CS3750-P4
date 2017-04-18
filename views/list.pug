@@ -4,7 +4,7 @@ block content
     .container.main
         .stock-list
             h2#title Stock List
-            #portfolio= portfolio
+            input#portfolio(type="hidden" value= portfolio)
 
 block scripts
     script(src='/scripts/_list.js')
