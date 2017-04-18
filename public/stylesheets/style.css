@@ -4,19 +4,20 @@ html {
 
 body {
   /*NAV BAR STUFF HERE*/
-  background: url('../img/header.jpg') no-repeat center center fixed; 
+  background: url('../img/header.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   min-height: 100%;
-  color: white;
+  color: black;
   margin: 0 auto, 0 auto
 }
-.navbar-nav-center { 
+.navbar-nav-center {
   position: absolute;
   left: 46%;
 }
+
 .dropbtn a {
   color: white;
   text-decoration: none;
@@ -86,4 +87,18 @@ body {
     margin-top: 50px;
     padding: 40px;
     background-color: rgba(0,0,0,0.5);
+
+#container{
+    width:50%; 
+    height:400px;
+
+}
+
+#faded {
+        opacity: 0.6;
+}
+
+.sliderList {
+    font-size: 16;
+    direction: rtl;
 }

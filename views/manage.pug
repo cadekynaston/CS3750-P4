@@ -1,9 +1,22 @@
 extends layout
 
 block content
-    h1.text-center Money Management
-    h3.text-center Total Funds: 
-    h3.text-center#loot
+    h2.text-center Money Management
+    .col-md-6
+        h4.text-center Total Funds:
+    .col-md-6
+        h4.text-center#loot
+    
     .box
-        .center-block#container(style='width:50%; height:400px;')
+        .container
+            .row#faded
+                .col-md-6.well
+                    h2.text-center Allocate Funds
+                    .sliderList
+
+                .col-md-6#container
+                        //- input#myRange(type='range', value='0', onchange='changeAmount()')
+                        //- p#dollars 
+                     
+                        
 

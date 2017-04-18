@@ -6,7 +6,11 @@ var schema = require('../models/schema');
 // NOTE THE utils.requireLogin   
 // this function from the utils class makes sure they are logged 
 // in before being able to go to chat but its not working right
-
+router.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 /* GET stock page. */
 router.get('/view', utils.requireLogin, function(req, res, next) {
   res.render('view', {
@@ -39,6 +43,13 @@ router.get('/manage', utils.requireLogin, function(req, res, next) {
     portfolio: req.user.portfolio,
     csrfToken: req.csrfToken()
   });
+});
+
+router.post('/add', function(req, res){
+  var obj = {};
+  console.log('body: ' + JSON.stringify(req.body));
+  res.send(req.body);
+
 });
 
 module.exports = router;
