@@ -10,13 +10,17 @@
   width: 500px;
   height: 80px;
   font-size: 4em;
-
+  float: left;
+  margin-right: 20px;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 #stock-search-btn {
   height: 80px;
   width: 150px;
   border-radius: 5px;
+  font-size: 2em;
 }
 
 #stocks {
