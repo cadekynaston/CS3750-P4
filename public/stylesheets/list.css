@@ -14,9 +14,18 @@
     /*float: right;*/
     padding-left: 40px;
 }
-/*#removebtn {
-    
-}*/
+.table{
+    color: white;
+    font-size: 11pt;
+}
+table thead th{
+    font-size: 12pt;
+}
+table tbody tr:hover {
+    background-color: rgba(245,245,245,0.9);
+    color: black;
+    font-weight: bold;
+}
 
 .table > tbody > tr > td {
     vertical-align: middle !important;
