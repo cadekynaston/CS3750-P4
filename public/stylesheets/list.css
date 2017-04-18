@@ -13,3 +13,7 @@
     /*float: right;*/
     padding-left: 40px;
 }
+#removebtn {
+    float: right;
+    margin-top: -8px;
+}
