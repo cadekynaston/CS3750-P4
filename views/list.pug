@@ -2,6 +2,7 @@ extends layout
 
 block content
     link(rel='stylesheet', href='/stylesheets/list.css')
+    input.register(type="hidden", id="csrf" name="_csrf", value=csrfToken)
     .container.main
         .stock-list
             h2#title Stock List
