@@ -1,15 +1,36 @@
 #list {
     width: 100%;
+    display: table;
 }
 #title {
     margin-top: 0;
-    padding-bottom: 20px;
 }
-#left {
-    /*float: left;*/
-    padding-right: 40px;
+.btn {
+    float: right;
+    width: 90px;
 }
-#right {
-    /*float: right;*/
-    padding-left: 40px;
+.table{
+    color: white;
+    font-size: 11pt;
+}
+table thead th{
+    font-size: 12pt;
+}
+table tbody tr:hover {
+    background-color: rgba(245,245,245,0.9);
+    color: black;
+    font-weight: bold;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle !important;
+    white-space: nowrap;
+    width: 28%;
+}
+.table > tbody > tr > th{
+    vertical-align: middle !important;
+    width: 20%;
+}
+#add {
+    float: right;
 }
