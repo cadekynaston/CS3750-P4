@@ -29,22 +29,6 @@ router.get('/list', utils.requireLogin, function(req, res, next) {
     csrfToken: req.csrfToken()
   });
 });
-router.post('/list', function(req, res){
-  var obj = {};
-  console.log('body: ' + JSON.stringify(req.body.symbol));
-  let symbol = JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1);
-
-  let test =  req.user.portfolio.filter(function(e) { return e.stockCode != symbol; });
-  console.log(test);
-  
-  schema.User.findOneAndUpdate({ username: req.user.username },
-    { portfolio: test}, {upsert:true}, function(err, doc){
-    if (err) return res.send(500, { error: err });
-    return res.send("succesfully saved");
-  });
-  
-    
-})
 
 router.get('/add', utils.requireLogin, function(req, res, next) {
   res.render('add', {
@@ -82,4 +66,20 @@ router.post('/add', function(req, res){
   
 });
 
+router.post('/remove', function(req, res){
+  var obj = {};
+  console.log('body: ' + JSON.stringify(req.body.symbol));
+  let symbol = JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1);
+
+  let test =  req.user.portfolio.filter(function(e) { return e.stockCode != symbol; });
+  console.log(test);
+  
+  schema.User.findOneAndUpdate({ username: req.user.username },
+    { portfolio: test}, {upsert:true}, function(err, doc){
+    if (err) return res.send(500, { error: err });
+    return res.send("succesfully saved");
+  });
+  
+    
+})
 module.exports = router;
