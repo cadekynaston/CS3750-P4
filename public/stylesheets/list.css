@@ -36,3 +36,6 @@ table tbody tr:hover {
     vertical-align: middle !important;
     width: 20%;
 }
+#add {
+    float: right;
+}
