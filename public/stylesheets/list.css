@@ -4,15 +4,6 @@
 }
 #title {
     margin-top: 0;
-    padding-bottom: 20px;
-}
-#left {
-    /*float: left;*/
-    padding-right: 40px;
-}
-#right {
-    /*float: right;*/
-    padding-left: 40px;
 }
 .table{
     color: white;
