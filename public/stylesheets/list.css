@@ -5,6 +5,10 @@
 #title {
     margin-top: 0;
 }
+.btn {
+    float: right;
+    width: 90px;
+}
 .table{
     color: white;
     font-size: 11pt;
