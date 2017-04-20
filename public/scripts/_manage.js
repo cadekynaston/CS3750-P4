@@ -8,53 +8,90 @@ $(document).ready(function() {
 $(function() {
     var totalMoney = 0;
     // get the stock info here
-    var stocksOld = [
-            {stockCode:"EFGH", amount: 2344},
-            {stockCode:"IJKL", amount: 15434},
-            {stockCode:"MNOP", amount: 23303},
-            {stockCode:"ABCD", amount: 6450}];
+    
+    // stocks.forEach(function(element) {
+    //     //sum up the total of all stock amounts
+    //     totalMoney += element.amount;
+    // })
+
     var stocks = JSON.parse($('#portfolio').val());
-    stocks.forEach(function(element) {
-        //sum up the total of all stock amounts
-        totalMoney += element.amount;
-    })
+
     
     //Format the money
     //snagged this from stack overflow to format the $
-    Number.prototype.formatMoney = function(c, d, t){
-        var n = this, 
-        c = isNaN(c = Math.abs(c)) ? 2 : c, 
-        d = d == undefined ? "." : d, 
-        t = t == undefined ? "," : t, 
-        s = n < 0 ? "-" : "$", 
-        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
-        j = (j = i.length) > 3 ? j % 3 : 0;
-        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-    };
-    var moneyString = totalMoney.formatMoney(2,'.',',');
-    document.getElementById("loot").innerHTML = moneyString;
+    // Number.prototype.formatMoney = function(c, d, t){
+    //     var n = this, 
+    //     c = isNaN(c = Math.abs(c)) ? 2 : c, 
+    //     d = d == undefined ? "." : d, 
+    //     t = t == undefined ? "," : t, 
+    //     s = n < 0 ? "-" : "$", 
+    //     i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+    //     j = (j = i.length) > 3 ? j % 3 : 0;
+    //     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    // };
+    // var moneyString = totalMoney.formatMoney(2,'.',',');
+    // document.getElementById("loot").innerHTML = moneyString;
 
     // make a list of sliders
     stocks.forEach(function(element) {
         $('.sliderList').append('<div><label>' + element.stockCode + 
-            '<br>' + element.amount.formatMoney(2,'.',',') +'<input type="range" value="0" onchange="adjustAmounts(this)" id="'
-                 + element.stockCode + '"></input></label></div>');
+            '<br>' + '<input type="number" size="3" min="0" max="100" id="' + element.stockCode + 
+                'amount" value="' + element.amount * 100 
+            + '"</input><input type="range" max="100" defaultValue="' 
+            + element.amount + '" onchange="adjustAmounts(this)" id="'
+            + element.stockCode + '"></input></label></div>');
     }, this);
     
     stocks.forEach(function(element) {
-        
-        myStocks.push({name: element.stockCode, y: element.amount / totalMoney})
+        myStocks.push({name: element.stockCode, y: element.amount})
     });
 
     drawChart(myStocks);
 }); // end initial get and drawChart
 
 function adjustAmounts(callingSlider){  // ???????????????????????????
+    document.getElementById(callingSlider.id + "amount").value = callingSlider.value;
     // get the new percentage of this stock
-    // how do I change the amount of each unique stock???????????
-    alert(callingSlider.id);
-    var currentAmount = 0;
-    //var x = document.getElementById("").value;
+    var currentAmount = callingSlider.value;
+    currentAmount /= 100;
+    var sumOfOthers = 0;
+    var diff = 0;
+    //var otherStocks = [];
+    //push in the new value
+    myStocks.forEach(function(element){
+        if(element.name == callingSlider.id){
+            element.y = callingSlider.value /100;
+        }
+    });
+    //get all the other percentages
+    myStocks.forEach(function(element) {
+        if(element.name != callingSlider.id){
+            sumOfOthers += element.y;
+        }
+    });
+    if((currentAmount + sumOfOthers) > 1){
+        diff = (1 - (currentAmount + sumOfOthers));
+        //alert(diff);
+        myStocks.forEach(function(element){
+            if(element.name != callingSlider.id){
+                var myPercentage = element.y / sumOfOthers;
+                element.y = (element.y + myPercentage * diff) / 100;
+            }
+        });
+
+       // drawChart(myStocks);
+
+        myStocks.forEach(function(element){
+            alert(element.name + " " + element.y);
+        });
+
+    }
+
+    //alert("new value: " + currentAmount);
+    //document.getElementById(callingSlider.id + "amount").value = currentAmount;
+
+    
+
     //document.getElementById("dollars").innerHTML = x;
 
     //subtract the difference from the remaining stocks proportionally

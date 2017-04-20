@@ -22,7 +22,7 @@ function remove(item)
         $.ajax({type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            url: '/stock/list',
+            url: '/stock/remove',						
             success: function(data) {
                 console.log('success');
                 console.log(JSON.stringify(data));

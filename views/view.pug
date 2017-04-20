@@ -1,11 +1,14 @@
 extends layout
-
+    
 block content
+    input.register(type="hidden", id="csrf" name="_csrf", value=csrfToken)
     input#portfolio(type="hidden" value= portfolio)
-    .main show stock window 
-    a.btn.btn-primary.btn-xl(href='/stock/add')
-        #btn2 Add Stock
-    a.btn.btn-primary.btn-xl(href='/stock/manage')
-        #btn2 Manage Stock
-    a.btn.btn-primary.btn-xl(href='/stock/list')
-        #btn2 List Stock
+    .main.container
+        #container(style="height: 400px; min-width: 100%")
+
+block scripts
+    script(src='/scripts/_stock.js')
+    script(src="https://code.highcharts.com/stock/highstock.js")
+    script(src="https://code.highcharts.com/stock/highcharts-more.js")
+    script(src="https://code.highcharts.com/stock/modules/exporting.js")
+
