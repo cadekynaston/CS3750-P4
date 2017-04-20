@@ -34,6 +34,7 @@ body {
     font-size: 16px;
     border: none;
     cursor: pointer;
+    text-decoration: none;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -51,7 +52,7 @@ body {
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    /*right: 0em;*/
+    text-align: left;
 }
 
 /* Links inside the dropdown */
@@ -63,7 +64,11 @@ body {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #a4d7a6 }
+.dropdown-content a:hover {
+    background-color: #a4d7a6;
+    text-decoration: none;
+    color: black;
+}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
@@ -81,6 +86,13 @@ body {
 }
 #logout:hover{
     text-decoration: none;    
+}
+
+.main {
+    margin-top: 50px;
+    padding: 40px;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
 }
 
 #container{

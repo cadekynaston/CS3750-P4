@@ -8,16 +8,14 @@ $(document).ready(function() {
 $(function() {
     var totalMoney = 0;
     // get the stock info here
-    var stocks = [
-            {stockCode:"EFGH", amount: .25},
-            {stockCode:"IJKL", amount: .25},
-            {stockCode:"MNOP", amount: .25},
-            {stockCode:"ABCD", amount: .25}];
     
     // stocks.forEach(function(element) {
     //     //sum up the total of all stock amounts
     //     totalMoney += element.amount;
     // })
+
+    var stocks = JSON.parse($('#portfolio').val());
+
     
     //Format the money
     //snagged this from stack overflow to format the $

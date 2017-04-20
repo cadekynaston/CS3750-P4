@@ -4,15 +4,14 @@ extends layout
 
 block content
   link(rel='stylesheet', href='/stylesheets/add.css')
+  input.register(type="hidden", id="csrf" name="_csrf", value=csrfToken)
   .stock-search-container 
     .stock-input-container
       input(type='text' id="stock-search" placeholder="search for stocks" class="stock-search")
       input(type='button' id="stock-search-btn" value="Search" onClick="callAPI()")
     #stocks
-      .stock-result
-        .stock-title Netflix
-        .stock-symbol nflx
-        button.add-stock-btn add
+
+      
 
       
   
@@ -22,25 +21,25 @@ block content
     
     $("#stocks").on('click', 'button', function() {
         var parent = $(this).parent();
-        parent[0].innerHTML = "added!"
-        
+        console.log(parent[0]);
+
         var data = {};
-        data.title = "title";
-        data.message = "message";
-          
+        data.symbol = $(parent[0]).find('.stock-symbol')[0].innerHTML.trim()
+        data.title = $(parent[0]).find('.stock-title')[0].innerHTML.trim()
+        data._csrf = document.querySelector('#csrf').value;
+
         $.ajax({type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            url: 'http://localhost:3000/add',						
+            url: 'http://localhost:3000/stock/add',						
             success: function(data) {
                 console.log('success');
                 console.log(JSON.stringify(data));
-            }
+                parent[0].innerHTML = "Added!";
+            } 
         });
       });
       
-    
-    
     function jsonCallback(data){
       const app = document.querySelector('#stocks');
       app.innerHTML = '';
@@ -55,9 +54,8 @@ block content
               `+x.Symbol+`
             </div>
             <button class="add-stock-btn">add</button>
-          </div>  
+          </div>
         `;
-    
         app.appendChild(node);
       });
     };
