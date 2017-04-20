@@ -25,6 +25,7 @@ block content
 
         var data = {};
         data.symbol = $(parent[0]).find('.stock-symbol')[0].innerHTML.trim()
+        data.title = $(parent[0]).find('.stock-title')[0].innerHTML.trim()
         data._csrf = document.querySelector('#csrf').value;
 
         $.ajax({type: 'POST',
@@ -34,7 +35,8 @@ block content
             success: function(data) {
                 console.log('success');
                 console.log(JSON.stringify(data));
-            }
+                parent[0].innerHTML = "Added!";
+            } 
         });
       });
       
