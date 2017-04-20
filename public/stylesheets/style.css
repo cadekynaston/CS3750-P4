@@ -95,5 +95,5 @@ body {
 
 .sliderList {
     font-size: 16;
-    direction: rtl;
+    /**direction: rtl;*/
 }
