@@ -3,8 +3,8 @@ extends layout
 block content
     input.register(type="hidden", id="csrf" name="_csrf", value=csrfToken)
     input#portfolio(type="hidden" value= portfolio)
-    .main chart with history of stocks
-        #container(style="height: 400px; min-width: 310px")
+    .main.container
+        #container(style="height: 400px; min-width: 100%")
 
 block scripts
     script(src='/scripts/_stock.js')
