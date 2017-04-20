@@ -48,7 +48,7 @@ window.onload = ()=>{
 
     $.each(names, function (i, name) {
 
-        $.getJSON('http://dev.markitondemand.com/MODApis/Api/v2/InteractiveChart/json?parameters=%7B"Normalized"%3Afalse%2C"NumberOfDays"%3A365%2C"DataPeriod"%3A"Day"%2C"Elements"%3A%5B%7B"Symbol"%3A"' + name.toLowerCase() + '%2C"Type"%3A"price"%2C"Params"%3A%5B"c"%5D%7D%5D%7D',    function (data) {
+        $.getJSON('/stock/graphInfo', function (data) {
 
             seriesOptions[i] = {
                 name: name,
