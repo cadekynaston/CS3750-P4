@@ -4,15 +4,10 @@
 }
 #title {
     margin-top: 0;
-    padding-bottom: 20px;
 }
-#left {
-    /*float: left;*/
-    padding-right: 40px;
-}
-#right {
-    /*float: right;*/
-    padding-left: 40px;
+.btn {
+    float: right;
+    width: 90px;
 }
 .table{
     color: white;
@@ -35,4 +30,7 @@ table tbody tr:hover {
 .table > tbody > tr > th{
     vertical-align: middle !important;
     width: 20%;
+}
+#add {
+    float: right;
 }

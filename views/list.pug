@@ -6,6 +6,8 @@ block content
     .container.main
         .stock-list
             h2#title Stock List
+                //a(href='/stock/add')
+                    input.btn.btn-success#add(type="button" value="Add Stock")
             input#portfolio(type="hidden" value= portfolio)
             table.table#mytable
                 thead
@@ -15,6 +17,8 @@ block content
                         th Up or Down
                         th Stock Ticker Code
                         th(style="width:40px;")
+                            a(href='/stock/add')
+                                input.btn.btn-success#add(type="button" value="Add Stock")
                 tbody
                     
 

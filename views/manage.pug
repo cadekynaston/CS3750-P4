@@ -4,21 +4,23 @@ block content
     h2.text-center Money Management
     input.register(type="hidden", id="csrf" name="_csrf", value=csrfToken)
     input#portfolio(type="hidden" value= portfolio)
-    .col-md-6
-        h4.text-center Total Funds:
-    .col-md-6
-        h4.text-center#loot
-    
     .box
         .container
+            h4.text-center Total Funds:
+            h4.text-center#loot
             .row#faded
                 .col-md-6.well
                     h2.text-center Allocate Funds
-                    .sliderList
+                    .sliderList.text-center
 
                 .col-md-6#container
+
+
                         //- input#myRange(type='range', value='0', onchange='changeAmount()')
                         //- p#dollars 
+block scripts
+    script(src='/scripts/_manage.js')
+    script(src="https://code.highcharts.com/highcharts.src.js")
                      
 block scripts
     script(src='/scripts/_manage.js')
