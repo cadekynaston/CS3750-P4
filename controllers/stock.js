@@ -73,13 +73,10 @@ router.post('/remove', function(req, res){
 
   let test =  req.user.portfolio.filter(function(e) { return e.stockCode != symbol; });
   console.log(test);
-  
   schema.User.findOneAndUpdate({ username: req.user.username },
     { portfolio: test}, {upsert:true}, function(err, doc){
     if (err) return res.send(500, { error: err });
     return res.send("succesfully saved");
   });
-  
-    
 })
 module.exports = router;
