@@ -2,12 +2,26 @@
 window.onload = ()=> {
      var portfolio = JSON.parse($('#portfolio').val());
      portfolio.forEach(function(element) {
-         // add stockName to portfolio for easy access, maybe add current price too
-         // they arent in the portfolio that's why they are undefined on the screen
-        $('tbody').append('<tr><th>' + element.stockTitle + '</th><td>' + element.price + '</td>'
-        + '<td>Up</td><td id="stockCode">' + element.stockCode + '</td><td><input type="button" id="removebtn" class="btn btn-danger" value="Remove" onclick="remove(this)"/></td>><hr/>');
+        console.log(element.stockCode);
+        
+        $.ajax({
+            url: "http://dev.markitondemand.com/MODApis/Api/v2/Quote/jsonp?symbol="+ element.stockCode,
+            dataType: "jsonp",
+            success: function(data){
+              let change = '';
+               if (data.Change > 0) {
+                 change = 'Up';
+               } else {
+                 change = 'Down';
+               }
+
+              $('tbody').append('<tr><th>' + element.stockTitle + '</th><td>$' + data.LastPrice + '</td>'
+              + '<td>'+change+'</td><td id="stockCode">' + element.stockCode + '</td><td><input type="button" id="removebtn" class="btn btn-danger" value="Remove" onclick="remove(this)"/></td>><hr/>');
+            }
+        });
     })
 }
+
 
 function remove(item)
 {
@@ -22,7 +36,7 @@ function remove(item)
         $.ajax({type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            url: '/stock/remove',						
+            url: '/stock/remove',
             success: function(data) {
                 console.log('success');
                 console.log(JSON.stringify(data));
