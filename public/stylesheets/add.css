@@ -59,6 +59,8 @@
   justify-content: space-around;
 }
 
-.add-stock-btn {
-
+.no-result {
+  color: white;
+  font-size: 3em;
+  margin: 3em;
 }
