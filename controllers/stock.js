@@ -48,21 +48,32 @@ router.get('/manage', utils.requireLogin, function(req, res, next) {
 
 router.post('/add', function(req, res){
   var obj = {};
+  var alreadyFollowing = false;
   console.log('body: ' + JSON.stringify(req.body.symbol));
-  if(req.user.portfolio.length==0)
-    req.user.portfolio.push({stockCode:JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1),stockTitle:JSON.stringify(req.body.title).substring(1,JSON.stringify(req.body.title).length-1),amount: 100})
-  else
-    req.user.portfolio.push({stockCode:JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1),stockTitle:JSON.stringify(req.body.title).substring(1,JSON.stringify(req.body.title).length-1),amount: 0})
+  req.user.portfolio.forEach(x=>{
+    if (x.stockCode == JSON.stringify(req.body.symbol).replace(/['"]+/g, '')) {
+      alreadyFollowing = true;
+    }
+  })
+  if (alreadyFollowing){
+    return res.send("alreadyFollowing");
+  } else{
+    if(req.user.portfolio.length==0)
+      req.user.portfolio.push({stockCode:JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1),stockTitle:JSON.stringify(req.body.title).substring(1,JSON.stringify(req.body.title).length-1),amount: 100})
+    else
+      req.user.portfolio.push({stockCode:JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1),stockTitle:JSON.stringify(req.body.title).substring(1,JSON.stringify(req.body.title).length-1),amount: 0})
 
-  console.log('user', req.user.username, 'portfolio', req.user.portfolio);
+    console.log('user', req.user.username, 'portfolio', req.user.portfolio);
 
-  schema.User.findOneAndUpdate({ username: req.user.username },
-    { portfolio: req.user.portfolio}, {upsert:true}, function(err, doc){
-    if (err) return res.send(500, { error: err });
-    return res.send("succesfully saved");
-  });
+    schema.User.findOneAndUpdate({ username: req.user.username },
+      { portfolio: req.user.portfolio}, {upsert:true}, function(err, doc){
+      if (err) return res.send(500, { error: err });
 
-  console.log('this');
+      return res.send("succesfully saved");
+
+    });
+  }
+
 
 });
 
