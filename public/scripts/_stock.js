@@ -48,7 +48,7 @@ window.onload = ()=>{
 
     $.each(names, function (i, name) {
 
-        $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=' + name.toLowerCase() + '-c.json&callback=?',    function (data) {
+        $.getJSON('/stock/graphInfo/'+name, function (data) {
 
             seriesOptions[i] = {
                 name: name,
