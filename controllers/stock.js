@@ -98,6 +98,8 @@ router.post('/remove', function(req, res){
 router.post('/update', function(req, res){
   var obj = {};
   console.log('body: ' + req.body.portfolio);
+
+
   
   schema.User.findOneAndUpdate({ username: req.user.username },
     { portfolio: req.body.portfolio}, {upsert:true}, function(err, doc){

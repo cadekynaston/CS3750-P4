@@ -16,8 +16,8 @@ $(function() {
     // make a list of sliders
     stocks.forEach(function(element) {
         $('.sliderList').append('<div><label>' + element.stockCode + 
-            '<br>' + '<input type="number" size="3" min="0" max="100" id="' + element.stockCode + 
-                'amount" value="' + element.amount 
+            '<br>' + '<input type="number" onchange="updateSlider(this)" size="3" min="0" max="100" id="' 
+            + element.stockCode + 'amount" value="' + element.amount 
             + '"</input><input type="range" max="100" value="' 
             + element.amount + '" onchange="adjustAmounts(this)" id="'
             + element.stockCode + '"></input></label></div>');
@@ -30,6 +30,16 @@ $(function() {
 
     drawChart(chartItems);
 }); // end initial get and drawChart
+
+function updateSlider(numberBox){
+    //alert("box changed" + sliderID.id);
+    //$('#' + this.value = 0;//$('#' + sliderID.id + 'amount').value;
+    var num = numberBox.value;
+    var mySlider = numberBox.id;
+    mySlider = mySlider.substring(0, mySlider.length - 6);
+    document.getElementById(mySlider).value = num;
+    document.getElementById(mySlider).onchange();
+}
 
 function adjustAmounts(callingSlider){
     var sumOfOthers = 0;
@@ -53,7 +63,7 @@ function adjustAmounts(callingSlider){
         myStocks.forEach(function(element){
             if(element.stockCode != callingSlider.id){
                 if(sumOfOthers > 0) {myPercentage = element.amount / sumOfOthers;}
-                element.amount = element.amount + (myPercentage * diff);
+                element.amount = Math.floor(element.amount + (myPercentage * diff));
                 if(element.amount < 0){ element.amount = 0;}
             }
         });
@@ -65,10 +75,20 @@ function adjustAmounts(callingSlider){
 
 function postIt(){
     
-    $('.postInfo').on('click',function(){
-        var data = {portfolio: myStocks, _csrf: document.querySelector('#csrf').value};
-        $.post('/stock/update', myStocks);
+    var data = {portfolio: myStocks, _csrf: document.querySelector('#csrf').value};
+    console.log(data.portfolio);
+   
+    $.ajax({type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: '/stock/update',
+        success: function(data) {
+            console.log('success');
+            console.log(JSON.stringify(data));
+        }
     });
+
+
 }
 
 function setNewAmounts(arr){
