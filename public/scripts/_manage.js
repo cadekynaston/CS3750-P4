@@ -67,7 +67,7 @@ function postIt(){
     
     var data = {portfolio: myStocks, _csrf: document.querySelector('#csrf').value};
     console.log(data.portfolio);
-    $.post('/stock/update', data);
+    $.post('/stock/update', JSON.stringify(data));
 
 }
 
