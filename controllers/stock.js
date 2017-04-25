@@ -81,10 +81,9 @@ router.post('/add', function(req, res){
     schema.User.findOneAndUpdate({ username: req.user.username },
       { portfolio: req.user.portfolio}, {upsert:true}, function(err, doc){
       if (err) return res.send(500, { error: err });
-      return res.send("succesfully saved");
+      return res.send("successfully saved");
     });
   }
-
 });
 
 router.post('/remove', function(req, res){
@@ -97,7 +96,7 @@ router.post('/remove', function(req, res){
   schema.User.findOneAndUpdate({ username: req.user.username },
     { portfolio: test}, {upsert:true}, function(err, doc){
     if (err) return res.send(500, { error: err });
-    return res.send("succesfully saved");
+    return res.send("successfully saved");
   });
 })
 
@@ -108,7 +107,7 @@ router.post('/update', function(req, res){
   schema.User.findOneAndUpdate({ username: req.user.username },
     { portfolio: req.body.portfolio}, {upsert:true}, function(err, doc){
     if (err) return res.send(500, { error: err });
-    return res.send("succesfully saved");
+    return res.send("successfully saved");
   });
   
     
