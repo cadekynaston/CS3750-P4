@@ -23,9 +23,20 @@ $(function() {
             
             //write the values into a chart friendly array (a decimal 0 to 1)
             chartItems.push({name: element.stockCode, y: (element.amount) / 100});
+            
             //{stockCode:,stockTitle:,amount:
             myStocks.push({stockCode: element.stockCode, stockTitle: element.stockTitle, amount: element.amount});
     }, this);
+
+    var sumC = 0;
+    var unall = 0;
+    chartItems.forEach(function(element) {
+        sumC += element.y;
+    }, this);
+    if(sumC < 1){
+        unall = 1 - sumC;
+        chartItems.push({name: "Unallocated", y: unall});
+    }
 
     drawChart(chartItems);
 }); // end initial get and drawChart
