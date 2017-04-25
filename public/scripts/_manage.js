@@ -65,10 +65,10 @@ function adjustAmounts(callingSlider){
 
 function postIt(){
     
-    $('.postInfo').on('click',function(){
-        var data = {portfolio: myStocks, _csrf: document.querySelector('#csrf').value};
-        $.post('/stock/update', myStocks);
-    });
+    var data = {portfolio: myStocks, _csrf: document.querySelector('#csrf').value};
+    console.log(data.portfolio);
+    $.post('/stock/update', data);
+
 }
 
 function setNewAmounts(arr){
