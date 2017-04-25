@@ -7,7 +7,7 @@ block content
   input.register(type="hidden", id="csrf" name="_csrf", value=csrfToken)
   .stock-search-container 
     .stock-input-container
-      input(type='text' id="stock-search" placeholder="search for stocks" class="stock-search")
+      input(type='text' id="stock-search" placeholder="search for stock..." class="stock-search")
       input(type='button' id="stock-search-btn" value="Search" onClick="callAPI()")
     #stocks
 
@@ -18,9 +18,22 @@ block content
     
     
   script.
-    
+    var typingTimer;          
+    var doneTypingInterval = 500;  
+
+    $('#stock-search').keyup(function(){
+        clearTimeout(typingTimer);
+        if ($('#stock-search').val()) {
+          typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
+    });
+
+    function doneTyping () {
+        callAPI();
+    }
+        
     $("#stocks").on('click', 'button', function() {
-        var parent = $(this).parent();
+        var parent = $(this).parent().parent();
         console.log(parent[0]);
 
         var data = {};
@@ -43,21 +56,27 @@ block content
     function jsonCallback(data){
       const app = document.querySelector('#stocks');
       app.innerHTML = '';
-      data.map(x => {
-        var node = document.createElement('div');
-        node.innerHTML = `
-          <div class="stock-result" id="`+x.Symbol+`">
-            <div class="stock-title">
-              `+x.Name+`
+      if (data.length === 0) {
+        app.innerHTML = `<div class="no-result">No results</div>`
+      } else {
+        data.map(x => {
+          var node = document.createElement('div');
+          node.innerHTML = `
+            <div class="stock-result" id="`+x.Symbol+`">
+              <div class="stock-title">
+                `+x.Name+`
+              </div>
+              <div class="symbol-button">
+                <div class="stock-symbol">
+                  `+x.Symbol+`
+                </div>
+                <button class="add-stock-btn btn btn-success">follow</button>
+              </div>  
             </div>
-            <div class="stock-symbol">
-              `+x.Symbol+`
-            </div>
-            <button class="add-stock-btn">add</button>
-          </div>
-        `;
-        app.appendChild(node);
-      });
+          `;
+          app.appendChild(node);
+        });
+      }
     };
     
     function callAPI(x) {

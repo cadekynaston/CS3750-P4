@@ -54,7 +54,9 @@ router.get('/manage', utils.requireLogin, function(req, res, next) {
 
 router.post('/add', function(req, res){
   var obj = {};
+  var alreadyFollowing = false;
   console.log('body: ' + JSON.stringify(req.body.symbol));
+
   let symbol = JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1);
   let title = JSON.stringify(req.body.title).substring(1,JSON.stringify(req.body.title).length-1);
   if(req.user.portfolio.length==0)
@@ -62,13 +64,27 @@ router.post('/add', function(req, res){
   else
     req.user.portfolio.push({stockTitle: title, stockCode: symbol, amount: 0})
 
-  console.log('user:', req.user.username, 'portfolio:', req.user.portfolio);
+  req.user.portfolio.forEach(x=>{
+    if (x.stockCode == JSON.stringify(req.body.symbol).replace(/['"]+/g, '')) {
+      alreadyFollowing = true;
+    }
+  })
+  if (alreadyFollowing){
+    return res.send("alreadyFollowing");
+  } else{
+    if(req.user.portfolio.length==0)
+      req.user.portfolio.push({stockCode:JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1),stockTitle:JSON.stringify(req.body.title).substring(1,JSON.stringify(req.body.title).length-1),amount: 100})
+    else
+      req.user.portfolio.push({stockCode:JSON.stringify(req.body.symbol).substring(1,JSON.stringify(req.body.symbol).length-1),stockTitle:JSON.stringify(req.body.title).substring(1,JSON.stringify(req.body.title).length-1),amount: 0})
 
-  schema.User.findOneAndUpdate({ username: req.user.username },
-    { portfolio: req.user.portfolio}, {upsert:true}, function(err, doc){
-    if (err) return res.send(500, { error: err });
-    return res.send("succesfully saved");
-  });
+    console.log('user', req.user.username, 'portfolio', req.user.portfolio);
+    schema.User.findOneAndUpdate({ username: req.user.username },
+      { portfolio: req.user.portfolio}, {upsert:true}, function(err, doc){
+      if (err) return res.send(500, { error: err });
+      return res.send("succesfully saved");
+    });
+  }
+
 });
 
 router.post('/remove', function(req, res){
@@ -78,14 +94,11 @@ router.post('/remove', function(req, res){
 
   let test =  req.user.portfolio.filter(function(e) { return e.stockCode != symbol; });
   console.log(test);
-  
   schema.User.findOneAndUpdate({ username: req.user.username },
     { portfolio: test}, {upsert:true}, function(err, doc){
     if (err) return res.send(500, { error: err });
     return res.send("succesfully saved");
   });
-  
-    
 })
 
 router.post('/update', function(req, res){

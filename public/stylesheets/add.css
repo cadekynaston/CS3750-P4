@@ -32,10 +32,35 @@
 }
 
 .stock-result {
-  height: 80px;
-  width: 200px;
+  height: 170px;
+  width: 350px;
   display: flex;
   flex-direction: column;
-  background-color: red;
+  justify-content: space-around;
+  background-color: rgba(0, 0, 0,0.5);
+  color: white;
   margin: 10px;
+  text-align: center;
+}
+
+.stock-title {
+ text-align: center;
+ font-size: 2em;
+}
+
+.stock-symbol {
+  font-size: 2em;
+}
+
+.symbol-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.no-result {
+  color: white;
+  font-size: 3em;
+  margin: 3em;
 }
