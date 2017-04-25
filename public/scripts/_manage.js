@@ -1,7 +1,6 @@
 var chartItems = [];
 var myStocks = [];
 const totalMoney = 100;
-var myChart;
 
 $(document).ready(function() {
     $('.box').hide().fadeIn(1000);
@@ -32,8 +31,6 @@ $(function() {
 }); // end initial get and drawChart
 
 function updateSlider(numberBox){
-    //alert("box changed" + sliderID.id);
-    //$('#' + this.value = 0;//$('#' + sliderID.id + 'amount').value;
     var num = numberBox.value;
     var mySlider = numberBox.id;
     mySlider = mySlider.substring(0, mySlider.length - 6);
@@ -56,7 +53,7 @@ function adjustAmounts(callingSlider){
         }
     });
  
-    if((callingSlider.value + sumOfOthers) > 100){
+    if((parseInt(callingSlider.value) + sumOfOthers) > 100){
         diff = totalMoney - callingSlider.value;
         diff -= sumOfOthers;
         myPercentage = 0.0;
@@ -64,11 +61,11 @@ function adjustAmounts(callingSlider){
             if(element.stockCode != callingSlider.id){
                 if(sumOfOthers > 0) {myPercentage = element.amount / sumOfOthers;}
                 element.amount = Math.floor(element.amount + (myPercentage * diff));
-                if(element.amount < 0){ element.amount = 0;}
+                //if(element.amount < 0){ element.amount = 0;}
             }
         });
     };
-    //post to db here?
+    
     setNewAmounts(myStocks);
 
 }
@@ -99,13 +96,21 @@ function setNewAmounts(arr){
         document.getElementById(element.stockCode).value = element.amount;
         c.push({name: element.stockCode, y: (element.amount) / 100})
     });
+    var sumC = 0;
+    var unall = 0;
+    c.forEach(function(element) {
+        sumC += element.y;
+    }, this);
+    if(sumC < 1){
+        unall = 1 - sumC;
+        c.push({name: "Unallocated", y: unall});
+    }
     
     var chart = $('#container').highcharts();
     chart.series[0].setData(c, true);
 }
 
-$(function (){//drawChart(chartItems){
-        //var 
+$(function (){
        myChart = // Radialize the colors
         Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
             return {
