@@ -48,7 +48,7 @@ window.onload = ()=>{
 
     $.each(names, function (i, name) {
 
-        $.getJSON('/stock/graphInfo', function (data) {
+        $.getJSON('/stock/graphInfo/'+name, function (data) {
 
             seriesOptions[i] = {
                 name: name,
