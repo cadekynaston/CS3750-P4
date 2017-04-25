@@ -2,7 +2,7 @@ extends layout
 
 block content
     h2.text-center Money Management
-
+    input.register(type="hidden", id="csrf" name="_csrf", value=csrfToken)
     input#portfolio(type="hidden" value= portfolio)
     
     .box
@@ -13,6 +13,7 @@ block content
                 .col-md-6.well
                     h2.text-center Allocate Funds
                     .sliderList
+                    .btn.btn-success.postInfo(type="submit") Save Changes
 
                 .col-md-6#container
 

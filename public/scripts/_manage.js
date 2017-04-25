@@ -39,35 +39,36 @@ function adjustAmounts(callingSlider){
     myStocks.forEach(function(element){
         if(element.stockCode == callingSlider.id){
             //set the moved item in the main array
-            element.amount = callingSlider.value;
+            element.amount = parseInt(callingSlider.value);
         }
         else{
-            sumOfOthers += element.amount;
+            sumOfOthers += parseInt(element.amount);
         }
     });
  
     if((callingSlider.value + sumOfOthers) > 100){
         diff = totalMoney - callingSlider.value;
         diff -= sumOfOthers;
-        //var diffPer = diff / (myStocks.length - 1);
         myPercentage = 0.0;
         myStocks.forEach(function(element){
             if(element.stockCode != callingSlider.id){
                 if(sumOfOthers > 0) {myPercentage = element.amount / sumOfOthers;}
                 element.amount = element.amount + (myPercentage * diff);
                 if(element.amount < 0){ element.amount = 0;}
-                // if(element.amount >= diffPer){
-                //     element.amount += diffPer;
-                // }
-                // else{
-                //     element.amount = 0;
-                // }
-
             }
         });
     };
     //post to db here?
     setNewAmounts(myStocks);
+
+}
+
+function postIt(){
+    
+    $('.postInfo').on('click',function(){
+        var data = {portfolio: myStocks, _csrf: document.querySelector('#csrf').value};
+        $.post('/stock/update', myStocks);
+    });
 }
 
 function setNewAmounts(arr){
