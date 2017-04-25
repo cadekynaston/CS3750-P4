@@ -1,4 +1,7 @@
+var chartItems = [];
 var myStocks = [];
+const totalMoney = 100;
+var myChart;
 
 $(document).ready(function() {
     $('.box').hide().fadeIn(1000);
@@ -6,101 +9,84 @@ $(document).ready(function() {
 
 // get the stock info, show list and create a chart
 $(function() {
-    var totalMoney = 0;
+    
     // get the stock info here
-    
-    // stocks.forEach(function(element) {
-    //     //sum up the total of all stock amounts
-    //     totalMoney += element.amount;
-    // })
-
     var stocks = JSON.parse($('#portfolio').val());
-
-    
-    //Format the money
-    //snagged this from stack overflow to format the $
-    // Number.prototype.formatMoney = function(c, d, t){
-    //     var n = this, 
-    //     c = isNaN(c = Math.abs(c)) ? 2 : c, 
-    //     d = d == undefined ? "." : d, 
-    //     t = t == undefined ? "," : t, 
-    //     s = n < 0 ? "-" : "$", 
-    //     i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
-    //     j = (j = i.length) > 3 ? j % 3 : 0;
-    //     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-    // };
-    // var moneyString = totalMoney.formatMoney(2,'.',',');
-    // document.getElementById("loot").innerHTML = moneyString;
 
     // make a list of sliders
     stocks.forEach(function(element) {
         $('.sliderList').append('<div><label>' + element.stockCode + 
             '<br>' + '<input type="number" size="3" min="0" max="100" id="' + element.stockCode + 
-                'amount" value="' + element.amount * 100 
-            + '"</input><input type="range" max="100" defaultValue="' 
+                'amount" value="' + element.amount 
+            + '"</input><input type="range" max="100" value="' 
             + element.amount + '" onchange="adjustAmounts(this)" id="'
             + element.stockCode + '"></input></label></div>');
+            
+            //write the values into a chart friendly array (a decimal 0 to 1)
+            chartItems.push({name: element.stockCode, y: (element.amount) / 100});
+            //{stockCode:,stockTitle:,amount:
+            myStocks.push({stockCode: element.stockCode, stockTitle: element.stockTitle, amount: element.amount});
     }, this);
-    
-    stocks.forEach(function(element) {
-        myStocks.push({name: element.stockCode, y: element.amount})
-    });
 
-    drawChart(myStocks);
+    drawChart(chartItems);
 }); // end initial get and drawChart
 
-function adjustAmounts(callingSlider){  // ???????????????????????????
-    document.getElementById(callingSlider.id + "amount").value = callingSlider.value;
-    // get the new percentage of this stock
-    var currentAmount = callingSlider.value;
-    currentAmount /= 100;
+function adjustAmounts(callingSlider){
     var sumOfOthers = 0;
     var diff = 0;
-    //var otherStocks = [];
+
     //push in the new value
     myStocks.forEach(function(element){
-        if(element.name == callingSlider.id){
-            element.y = callingSlider.value /100;
+        if(element.stockCode == callingSlider.id){
+            //set the moved item in the main array
+            element.amount = parseInt(callingSlider.value);
+        }
+        else{
+            sumOfOthers += parseInt(element.amount);
         }
     });
-    //get all the other percentages
-    myStocks.forEach(function(element) {
-        if(element.name != callingSlider.id){
-            sumOfOthers += element.y;
-        }
-    });
-    if((currentAmount + sumOfOthers) > 1){
-        diff = (1 - (currentAmount + sumOfOthers));
-        //alert(diff);
+ 
+    if((callingSlider.value + sumOfOthers) > 100){
+        diff = totalMoney - callingSlider.value;
+        diff -= sumOfOthers;
+        myPercentage = 0.0;
         myStocks.forEach(function(element){
-            if(element.name != callingSlider.id){
-                var myPercentage = element.y / sumOfOthers;
-                element.y = (element.y + myPercentage * diff) / 100;
+            if(element.stockCode != callingSlider.id){
+                if(sumOfOthers > 0) {myPercentage = element.amount / sumOfOthers;}
+                element.amount = element.amount + (myPercentage * diff);
+                if(element.amount < 0){ element.amount = 0;}
             }
         });
+    };
+    //post to db here?
+    setNewAmounts(myStocks);
 
-       // drawChart(myStocks);
-
-        myStocks.forEach(function(element){
-            alert(element.name + " " + element.y);
-        });
-
-    }
-
-    //alert("new value: " + currentAmount);
-    //document.getElementById(callingSlider.id + "amount").value = currentAmount;
-
-    
-
-    //document.getElementById("dollars").innerHTML = x;
-
-    //subtract the difference from the remaining stocks proportionally
-    //write to stockList
-    //redraw graph
 }
 
-function drawChart(arr){
-        var myChart = // Radialize the colors
+function postIt(){
+    
+    $('.postInfo').on('click',function(){
+        var data = {portfolio: myStocks, _csrf: document.querySelector('#csrf').value};
+        $.post('/stock/update', myStocks);
+    });
+}
+
+function setNewAmounts(arr){
+    //write the new values to the text boxes,sliders, redraw chart
+    var c = [];
+    arr.forEach(function(element){
+        document.getElementById(element.stockCode + "amount").value = element.amount;
+        document.getElementById(element.stockCode).value = element.amount;
+        c.push({name: element.stockCode, y: (element.amount) / 100})
+    });
+    
+    var chart = $('#container').highcharts();
+    chart.series[0].setData(c, true);
+}
+
+$(function (){//drawChart(chartItems){
+        //var 
+       myChart = // Radialize the colors
         Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
             return {
                 radialGradient: {
@@ -145,7 +131,7 @@ function drawChart(arr){
         },
         series: [{
             name: 'Stocks',
-            data: myStocks
+            data: chartItems
         }]
     });
-}
+});
