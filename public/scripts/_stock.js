@@ -49,7 +49,11 @@ window.onload = ()=>{
     $.each(names, function (i, name) {
 
         $.getJSON('/stock/graphInfo/'+name, function (data) {
-
+            console.log(data.Dates);
+            $.each(data.Dates,function(i, date){
+                // convert to milliseconds
+                //data.Dates[i] = date.
+            })
             seriesOptions[i] = {
                 name: name,
                 data: data
