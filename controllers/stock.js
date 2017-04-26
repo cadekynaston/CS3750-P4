@@ -23,9 +23,32 @@ router.get('/view', utils.requireLogin, function(req, res, next) {
 });
 router.get('/graphInfo/:symbol', function(req, res, next){
   console.log(req.params.symbol)
-  fetch('http://dev.markitondemand.com/MODApis/Api/v2/InteractiveChart/json?parameters=%7B%22Normalized%22%3Afalse%2C%22NumberOfDays%22%3A365%2C%22DataPeriod%22%3A%22Day%22%2C%22Elements%22%3A%5B%7B%22Symbol%22%3A%22'+req.params.symbol+'%22%2C%22Type%22%3A%22price%22%2C%22Params%22%3A%5B%22c%22%5D%7D%5D%7D')
-    .then(data => data.ok ? data.json() : Promise.reject())
-    .then(data => res.send(data));
+  function status(response) {  
+    if (response.status >= 200 && response.status < 300) {  
+      return Promise.resolve(response)  
+    } else {  
+      return Promise.reject(new Error(response.statusText))  
+    }  
+  }
+
+  function json(response) {  
+    return response.json()  
+  }
+
+  fetch('https://chartapi.finance.yahoo.com/instrument/1.0/'+req.params.symbol+'/chartdata;type=quote;range=1d/json')
+    .then(function(response) {  
+      return response.text();  
+    })  
+    .then(function(text) {  
+      // console.log('Request successful', text); 
+      res.send(text);
+    })  
+    .catch(function(error) {  
+      log('Request failed', error)  
+    });
+    
+    // .then(data => data.ok ? data.json() : Promise.reject())
+    // .then(data => res.send(data));
 });
 router.get('/list', utils.requireLogin, function(req, res, next) {
 

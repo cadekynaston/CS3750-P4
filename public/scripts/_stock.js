@@ -48,11 +48,13 @@ window.onload = ()=>{
 
     $.each(names, function (i, name) {
 
-        $.getJSON('/stock/graphInfo/'+name, function (data) {
-            console.log(data.Dates);
-            $.each(data.Dates,function(i, date){
-                // convert to milliseconds
-                //data.Dates[i] = date.
+        $.get('/stock/graphInfo/'+name, function (text) {
+            //console.log(JSON.parse(text.substring(30,text.length-2)));
+            let json = JSON.parse(text.substring(30,text.length-2));
+            let data = [];
+            $.each(json.series,function(i, series){
+                console.log('index', i , 'data', series);
+                data.push([series.Timestamp,series.close,series.high,series.low,series.open]);
             })
             seriesOptions[i] = {
                 name: name,
