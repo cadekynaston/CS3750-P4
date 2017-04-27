@@ -1,0 +1,37 @@
+.dark {
+    margin-top: 20px;
+    padding: 20px;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+}
+
+#container{
+    width:50%; 
+    height:400px;
+
+}
+
+.sliderList {
+    font-size: 16;
+    margin: auto;
+    width: 30%;
+}
+
+input {
+    background-color: rgba(0,0,0,0.5);
+    display: inline-block;
+}
+
+.sliderList input:hover {
+    background-color: rgba(245,245,245,0.9);
+    color: black;
+    font-weight: bold;
+}
+button {
+    margin: auto;
+    text-align: center; 
+}
+
+h2 {
+    color: white;
+}
