@@ -91,12 +91,25 @@ function postIt(){
         contentType: 'application/json',
         url: '/stock/update',
         success: function(data) {
-            console.log('success');
+            //alert("Portfolio Saved.");
             console.log(JSON.stringify(data));
         }
     });
+    //document.getElementById('messages').innerHTML = 
+      //  '<div class="dark" class="text-center"><h2>testing</p></div>';
+    //$("#messages").delay(3200).style.visibility = "hidden";
+    //$('.messages').style.display = "block";
+    var textToShow = '<div id="x" class="dark" class="text-center"><h4>--- Portfolio Saved ---</p></div>'
+    //var mess = document.getElementById('messages');
+    //mess.appendChild()
+    $("#messages").append(textToShow);
+    setTimeout(hideIt,1000);
 
+    
 
+}
+function hideIt(){
+    $("#x").remove();
 }
 
 function setNewAmounts(arr){
