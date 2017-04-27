@@ -23,8 +23,6 @@ $(function() {
             
             //write the values into a chart friendly array (a decimal 0 to 1)
             chartItems.push({name: element.stockCode, y: (element.amount) / 100});
-            
-            //{stockCode:,stockTitle:,amount:
             myStocks.push({stockCode: element.stockCode, stockTitle: element.stockTitle, amount: element.amount});
     }, this);
 
@@ -95,13 +93,7 @@ function postIt(){
             console.log(JSON.stringify(data));
         }
     });
-    //document.getElementById('messages').innerHTML = 
-      //  '<div class="dark" class="text-center"><h2>testing</p></div>';
-    //$("#messages").delay(3200).style.visibility = "hidden";
-    //$('.messages').style.display = "block";
     var textToShow = '<div id="x" class="dark" class="text-center"><h4>--- Portfolio Saved ---</p></div>'
-    //var mess = document.getElementById('messages');
-    //mess.appendChild()
     $("#messages").append(textToShow);
     setTimeout(hideIt,1000);
 
