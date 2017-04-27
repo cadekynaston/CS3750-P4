@@ -94,18 +94,3 @@ body {
     color: white;
     background-color: rgba(0,0,0,0.5);
 }
-
-#container{
-    width:50%; 
-    height:400px;
-
-}
-
-#faded {
-        opacity: 0.6;
-}
-
-.sliderList {
-    font-size: 16;
-    /**direction: rtl;*/
-}
