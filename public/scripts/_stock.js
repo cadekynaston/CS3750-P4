@@ -20,8 +20,8 @@ window.onload = ()=>{
             let json = JSON.parse(text.substring(30,text.length-2));
             let data = [];
             $.each(json.series,function(i, series){
-                let time = new Date(series.Timestamp/.001, )
-                
+                let time = new Date(series.Timestamp/.001)
+                time = time.toLocaleDateString() + ' ' + time.toLocaleTimeString();
                 data.push({
                     x:time,
                     y:series.high
