@@ -3,7 +3,7 @@ extends layout
 block content
     input.register(type="hidden", id="csrf" name="_csrf", value=csrfToken)
     input#portfolio(type="hidden" value= portfolio)
-    .main.container
+    .container
         #container(style="height: 400px; min-width: 100%")
 
 block scripts
