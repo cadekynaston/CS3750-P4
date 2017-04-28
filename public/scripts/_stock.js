@@ -1,79 +1,62 @@
 window.onload = ()=>{
-    var seriesOptions = [],
-        seriesCounter = 0,
-        names = [];
+    
+        
     var portfolio = JSON.parse($('#portfolio').val());
+    
     portfolio.forEach(function(element) {
         console.log(element.stockCode);
-        names.push(element.stockCode);
-    });
-
-    /**
-     * Create the chart when all data is loaded
-     * @returns {undefined}
-     */
-
-    function createChart() {
-
-        Highcharts.stockChart('container', {
-
-            rangeSelector: {
-                selected: 4
-            },
-
-            yAxis: {
-                labels: {
-                    formatter: function () {
-                        return (this.value > 0 ? ' + ' : '') + this.value + '%';
-                    }
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 2,
-                    color: 'silver'
-                }]
-            },
-
-            plotOptions: {
-                series: {
-                    compare: 'percent',
-                    showInNavigator: true
-                }
-            },
-
-            tooltip: {
-                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-                valueDecimals: 2,
-                split: true
-            },
-
-            series: seriesOptions
-        });
-    }
-
-    $.each(names, function (i, name) {
-
+        let name = element.stockCode;
+        let data = [];
         $.get('/stock/graphInfo/'+name, function (text) {
             console.log(text.substring(30,text.length-2));
             let json = JSON.parse(text.substring(30,text.length-2));
-            let data = [];
             $.each(json.series,function(i, series){
-                console.log('index', i , 'data', series);
-                data.push([series.Date,series.close,series.high,series.low,series.open]);
+                let time = series.Timestamp/.001
+                // 1493348187939 your time
+                // 1491573298000 my time
+                if(i%3==1)
+                    data.push({
+                        x:time,
+                        y:series.high
+                    });
             })
-            seriesOptions[i] = {
-                name: name,
-                data: data
-            };
+            console.log(data)
+            var iChart = "c";
+            iChart += name.toString();
+            $('#container').append("<div id=" + iChart + "></div>");
+            $('#' + iChart).append("<p>test: " + name + "</p>");
+            function doIt(div){
+                Highcharts.stockChart(div, {
 
-            // As we're loading the data asynchronously, we don't know what order it will arrive. So
-            // we keep a counter and create the chart when all the data is loaded.
-            seriesCounter += 1;
 
-            if (seriesCounter === names.length) {
-                createChart();
+                    rangeSelector: {
+                        selected: 1
+                    },
+
+                    title: {
+                        text: name
+                    },
+
+                    series: [{
+                        name: name,
+                        data: data,
+                        tooltip: {
+                            valueDecimals: 2,
+                            formatter: function () {
+                                return '<b>' + this.series.name + '</b><br/>' +
+                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                    Highcharts.numberFormat(this.y, 2);
+                            }
+                        }
+                    }]
+                });
+            
+
             }
-        });
+            doIt(iChart)
+        })
+        
     });
+    
 }
     
