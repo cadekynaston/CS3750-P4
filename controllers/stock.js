@@ -35,7 +35,7 @@ router.get('/graphInfo/:symbol', function(req, res, next){
     return response.json()  
   }
 
-  fetch('https://chartapi.finance.yahoo.com/instrument/1.0/'+req.params.symbol+'/chartdata;type=quote;range=1m/json')
+  fetch('https://chartapi.finance.yahoo.com/instrument/1.0/'+req.params.symbol+'/chartdata;type=quote;range=1d/json')
     .then(function(response) {  
       return response.text();  
     })  

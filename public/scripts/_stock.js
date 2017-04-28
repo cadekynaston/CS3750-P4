@@ -59,7 +59,7 @@ window.onload = ()=>{
             let data = [];
             $.each(json.series,function(i, series){
                 console.log('index', i , 'data', series);
-                data.push([series.Date,series.close,series.high,series.low,series.open]);
+                data.push([series.Timestamp,series.close,series.high,series.low,series.open]);
             })
             seriesOptions[i] = {
                 name: name,
