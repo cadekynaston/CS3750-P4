@@ -22,7 +22,7 @@ window.onload = ()=>{
             $.each(json.series,function(i, series){
                 let time = new Date(series.Timestamp/.001)
                 time = time.toString().substr(0,24)
-                data.push({x:time.substring(0,24),y:series.high});
+                data.push({x:time,y:series.high});
             })
             console.log('index', i , 'data', data);
             var iChart = "c";
@@ -58,7 +58,7 @@ window.onload = ()=>{
                 tooltip: {
                     formatter: function () {
                         return '<b>' + this.series.name + '</b><br/>' +
-                            Highcharts.dateFormat('%a %b %d %Y %H:%M:%S %Z', this.x) + '<br/>' +
+                            Highcharts.dateFormat('%a %b %d %Y %H:%M:%S', this.x) + '<br/>' +
                             Highcharts.numberFormat(this.y, 2);
                     }
                 },
