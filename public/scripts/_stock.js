@@ -20,17 +20,63 @@ window.onload = ()=>{
             let json = JSON.parse(text.substring(30,text.length-2));
             let data = [];
             $.each(json.series,function(i, series){
-                console.log('index', i , 'data', series);
-                data.push([series.Timestamp,series.close,series.high,series.low,series.open]);
+                let time = new Date(series.Timestamp/.001)
+                time = time.toString().substr(0,24)
+                data.push({x:time.substring(0,24),y:series.high});
             })
-            seriesOptions[i] = {
-                name: name,
-                data: data
-            };
+            console.log('index', i , 'data', data);
+            var iChart = "c";
+            iChart += name.toString();
+            $('#container').append("<div id=" + iChart + "></div>");
+            $('#' + iChart).append("<p>test: " + name + "</p>");
+            
+            function doIt(div){
+                $('#' + div).highcharts({
+                chart: {
+                    type: 'spline',
+                    animation: Highcharts.svg,
+                    marginRight: 
+                    10,
+                },
+                title: {
+                    text: name
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150
+                },
+                yAxis: {
+                    title: {
+                        text: 'Value'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%a %b %d %Y %H:%M:%S %Z', this.x) + '<br/>' +
+                            Highcharts.numberFormat(this.y, 2);
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: false
+                },
+                series:{
+                    name: name,
+                    data: data
+                }
+            });
 
-            // As we're loading the data asynchronously, we don't know what order it will arrive. So
-            // we keep a counter and create the chart when all the data is loaded.
-            seriesCounter += 1;
+        }
+        
+            doIt(iChart);
 
             
         });
