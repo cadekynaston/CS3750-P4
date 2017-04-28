@@ -20,9 +20,12 @@ window.onload = ()=>{
             let json = JSON.parse(text.substring(30,text.length-2));
             let data = [];
             $.each(json.series,function(i, series){
-                let time = new Date(series.Timestamp/.001)
-                time = time.toString().substr(0,24)
-                data.push({x:time,y:series.high});
+                let time = new Date(series.Timestamp/.001, )
+                
+                data.push({
+                    x:time,
+                    y:series.high
+                });
             })
             console.log('index', i , 'data', data);
             var iChart = "c";
@@ -32,49 +35,49 @@ window.onload = ()=>{
             
             function doIt(div){
                 $('#' + div).highcharts({
-                chart: {
-                    type: 'spline',
-                    animation: Highcharts.svg,
-                    marginRight: 
-                    10,
-                },
-                title: {
-                    text: name
-                },
-                xAxis: {
-                    type: 'datetime',
-                    tickPixelInterval: 150
-                },
-                yAxis: {
-                    title: {
-                        text: 'Value'
+                    chart: {
+                        type: 'spline',
+                        animation: Highcharts.svg,
+                        marginRight: 
+                        10,
                     },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                tooltip: {
-                    formatter: function () {
-                        return '<b>' + this.series.name + '</b><br/>' +
-                            Highcharts.dateFormat('%a %b %d %Y %H:%M:%S', this.x) + '<br/>' +
-                            Highcharts.numberFormat(this.y, 2);
+                    title: {
+                        text: name
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        tickPixelInterval: 150
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Value'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            return '<b>' + this.series.name + '</b><br/>' +
+                                Highcharts.dateFormat('%b %d %Y %H:%M:%S', this.x) + '<br/>' +
+                                Highcharts.numberFormat(this.y, 2);
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    exporting: {
+                        enabled: false
+                    },
+                    series:{
+                        name: name,
+                        data: data
                     }
-                },
-                legend: {
-                    enabled: false
-                },
-                exporting: {
-                    enabled: false
-                },
-                series:{
-                    name: name,
-                    data: data
-                }
-            });
+                });
 
-        }
+            }
         
             doIt(iChart);
 
